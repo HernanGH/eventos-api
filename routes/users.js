@@ -1,20 +1,13 @@
 var express = require('express');
+const UserModel = require('../models/users');
 var router = express.Router();
-
-const users = [
-  {
-    "email": "asd@mail.com",
-    "password": "1234"
-  },
-  {
-    "email": "qwerty@mail.com",
-    "password": "9876"
-  }
-]
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send(users);
+  UserModel.find({}).then((users) => {
+    console.log('then users: ', users);
+    res.send(users);
+  });
 });
 
 module.exports = router;
