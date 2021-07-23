@@ -1,0 +1,53 @@
+swagger: "2.0"
+info:
+  description: "API de eventos"
+  version: "0.0.0"
+  title: "Eventos API"
+  contact:
+    email: "eventos@mail.com"
+host: "localhost:3000"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /users:
+    get:
+      tags:
+      - "usuarios"
+      summary: "Devuelve el listado de usuarios"
+      description: "Devuelve el listado de usuarios sino no hay usuarios devuelve lista vacio"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "query"
+          description: "Email opcional para filtrar usuarios"
+          type: "string"
+      responses:
+        "200":
+          description: "Operacion exitosa"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Usuario"
+      security:
+      - authorization: []
+definitions:
+  Usuario:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+securityDefinitions:
+  authorization:
+    type: "apiKey"
+    name: "authorization"
+    in: "header"

@@ -1,6 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const cors = require('cors');
+
+// DOCUMENTATION
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./docs/swagger.yml');
+
 
 // ROUTERS
 const indexRouter = require('./routes/index');
@@ -13,6 +20,8 @@ const globalParaMostrarParametros = require('./middlewares/globalParaMostrarPara
 
 const app = express();
 
+app.use(cors());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
