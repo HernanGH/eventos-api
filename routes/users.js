@@ -4,9 +4,16 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  UserModel.find({}).then((users) => {
+  const { email } = req.query;
+  let query = {}
+  if (email) {
+    query = {
+      email
+    };
+  }
+  UserModel.find(query).then((users) => {
     console.log('then users: ', users);
-    res.send(users);
+    res.status(200).json(users);
   });
 });
 
