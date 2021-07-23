@@ -1,15 +1,17 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-const getUser = require('./utils/getUser');
+// ROUTERS
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
+
+// MIDDLEWARES
 const globalParaObtenerUser = require('./middlewares/globalParaObtenerUser');
 const globalParaMostrarParametros = require('./middlewares/globalParaMostrarParametros');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -17,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(globalParaMostrarParametros); // MIDDLEWARE AGARRA TODOS LOS ENDPOINT DE ABAJO
 
-app.use('/login', loginRouter);
+app.use('/login', loginRouter); // ROUTER PUBLICO SIN VERIFICACION DE TOKEN
 
 app.use(globalParaObtenerUser); // MIDDLEWARE AGARRA TODOS LOS ENDPOINT DE ABAJO MENOS /LOGIN
 
